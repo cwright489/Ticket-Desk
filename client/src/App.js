@@ -4,6 +4,8 @@ import './App.css';
 import NavBar from "./components/NavBar/NavBar";
 import Footer from './components/Footer/Footer';
 import Container from "./components/Container/Container";
+import TicketCard from "./components/TicketCard/TicketCard";
+
 
 class App extends Component {
   constructor() {
@@ -32,6 +34,7 @@ class App extends Component {
 
         <NavBar />
         <Container />
+        <TicketCard />
         <Footer />
 
       </div>

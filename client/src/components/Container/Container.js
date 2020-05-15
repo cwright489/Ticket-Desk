@@ -21,13 +21,13 @@ export default function Container() {
         return (
             <React.Fragment>
                 <Grid item xs={4}>
-                    <Paper className={classes.paper}>item</Paper>
+                    <Paper className={classes.paper}>DESCRIPTION </Paper>
                 </Grid>
                 <Grid item xs={4}>
-                    <Paper className={classes.paper}>item</Paper>
+                    <Paper className={classes.paper}>STATUS</Paper>
                 </Grid>
                 <Grid item xs={4}>
-                    <Paper className={classes.paper}>item</Paper>
+                    <Paper className={classes.paper}>DEPARTMENT</Paper>
                 </Grid>
             </React.Fragment>
         );
