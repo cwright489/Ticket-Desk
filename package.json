@@ -11,6 +11,7 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
+    "@material-ui/core": "^4.9.14",
     "cors": "^2.8.5",
     "express": "^4.17.1"
   }
