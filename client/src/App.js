@@ -5,41 +5,27 @@ import NavBar from "./components/NavBar/NavBar";
 import Footer from './components/Footer/Footer';
 import Container from "./components/Container/Container";
 import TicketCard from "./components/TicketCard/TicketCard";
+//import { Router } from 'express';
+import { BrowserRouter as Router, Route } from "react-router-dom";
 
 
-class App extends Component {
-  constructor() {
-    super()
-    this.state = {
-      data: ""
-    }
-  }
-
-  //     callAPI() {
-  //     // const proxy = 'https://cors-anywhere.herokuapp.com/'
-  //     const url = 'https://localhost:4000/express_backend'
-  //     fetch(url)
-  //     .then(res => res.json())
-  //     .then(res => this.setState({ data: res }))
-  //     .catch(err => err);
-  //   }
-
-  //   componentDidMount() {
-  //     this.callAPI();
-  // }
-
-  render() {
+function App()
+{
     return (
-      <div className="App">
-
-        <NavBar />
-        <Container />
-        <TicketCard />
-        <Footer />
-
-      </div>
+      <Router>
+        <div className="App">
+          <NavBar />
+          <Route exact path = {"/"}>
+            <Container/>
+          </Route>
+          <Route exact path ={"/ticketCard"}>
+            <TicketCard/>
+          </Route>
+          <Footer />
+        </div>
+      </Router>
+      
     );
-  };
 };
 
 export default App;
