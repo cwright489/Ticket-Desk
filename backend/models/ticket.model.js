@@ -35,8 +35,7 @@ const ticket = new Schema(
 
         userAssigned:
         {
-            type: String,
-            required: true
+            type: String
         },
     }, {
     timestamps: true,
