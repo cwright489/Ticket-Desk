@@ -1,9 +1,11 @@
 import axios from "axios";
 
-export default
-{
-    getTickets: function()
+export function getTickets ()
     {
-        return axios.get("/routes/tickets/")
+        axios.get("http://localhost:5000/tickets")
+        .then(response =>
+        {
+            console.log(response);
+            return response;
+        })
     }
-}
