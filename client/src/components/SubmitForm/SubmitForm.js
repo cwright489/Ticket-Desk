@@ -2,8 +2,6 @@ import React from 'react';
 import { makeStyles } from '@material-ui/core/styles';
 import Button from '@material-ui/core/Button';
 import Dialog from '@material-ui/core/Dialog';
-//import ListItemText from '@material-ui/core/ListItemText';
-//import ListItem from '@material-ui/core/ListItem';
 import List from '@material-ui/core/List';
 import TextField from '@material-ui/core/TextField';
 import Divider from '@material-ui/core/Divider';
@@ -16,17 +14,18 @@ import Slide from '@material-ui/core/Slide';
 import Select from '@material-ui/core/Select';
 import InputLabel from '@material-ui/core/InputLabel';
 import MenuItem from '@material-ui/core/MenuItem';
-//import FormHelperText from '@material-ui/core/FormHelperText';
 import FormControl from '@material-ui/core/FormControl';
-import { response } from 'express';
+
 
 const useStyles = makeStyles((theme) => ({
     contained:
     {
-        padding: "2%"
+        padding: "1%",
+        height: "300px",
     },
     appBar: {
         position: 'relative',
+        backgroundColor: "#1976d2"
     },
     title: {
         marginLeft: theme.spacing(2),
@@ -35,18 +34,26 @@ const useStyles = makeStyles((theme) => ({
     background: {
         backgroundColor: "white"
     },
-     root: {
+      root: {
     '& .MuiTextField-root': {
-        margin: theme.spacing(2),
-        width: 700,
+        margin: theme.spacing(7),
+       width: 700,
     },
     formControl: {
         margin: theme.spacing(1),
         minWidth: 120,
     },
-    selectEmpty: {
-    marginTop: theme.spacing(2),
+    // selectEmpty: {
+    // marginTop: theme.spacing(2),
+    // },
+    dropdown: {
+        minWidth: "700px",
+        color: 'red'
     },
+    TextField: {
+        height: "300px",
+    }
+
   }
     
 }));
@@ -58,16 +65,15 @@ const Transition = React.forwardRef(function Transition(props, ref) {
 export default function SubmitForm() {
     const classes = useStyles();
     const [open, setOpen] = React.useState(false);
-    const [priority, setPriority] = React.useState();
-    const [userAssigned, AssignUser] = React.useState();
-    //const [issueDesc, setIssueDesc] = React.useState();
+const[formData,setFormData] = React.useState({
+    userId: "",
+    priority:"" ,
+    userAssigned:"",
+    issueDesc:"",
+    status:"open"
 
-    const data = 
-    {
-        userID: "",
-        dateCreated: Date.now,
-        priority: ,
-    }
+})
+    
     const handleClickOpen = () => {
         setOpen(true);
     };
@@ -76,25 +82,38 @@ export default function SubmitForm() {
         setOpen(false);
     };
 
-    const handleSubmit = () =>
-    {
-        
-    }
+    const handleInputChange = event => {
+        // Getting the value and name of the input which triggered the change
+        let value = event.target.value;
+        const name = event.target.name;
+
+        // Updating the input's state
+        setFormData({
+          ...formData,
+          [name]: value
+        });
+        console.log(formData)
+      };
+  
     const addTicket = () =>
     {
+        console.log(formData)
         fetch("http://localhost:5000/tickets/add",
         {
             method: 'POST',
             headers:{ 'Content-Type': 'application/json'},
-            body: JSON.stringify(data)
+            body: JSON.stringify(formData)
             
         }).then(response => response.json())
         .then(data => 
             {
-
+handleClose()
             })
     }
-
+    const handleSubmit = () =>
+    {
+        addTicket()
+    }
 
     return (
         <div>
@@ -108,63 +127,67 @@ export default function SubmitForm() {
                             <CloseIcon />
                         </IconButton>
                         <Typography variant="h6" className={classes.title}>
-                            Description
+                            Ticket
             </Typography>
-                        <Button autoFocus color="inherit" onClick={handleClose}>
+                        <Button className = {classes.background} onClick={handleSubmit}>
                             Submit
             </Button>
                     </Toolbar>
                 </AppBar>
                 <List className = {classes.contained}>
-                    {<TextField required id="standard-required" label="Required" defaultValue="Type subject here" />
-                    /* {<ListItem button>
-                        <ListItemText primary="Subject" secondary="TYPE YOUR TEXT HERE" />
-                    </ListItem> */}
+                    {/* <TextField required id="standard-required" label="Required" defaultValue="Type subject here" value = {value} name = "subject" onChange={handleInputChange}/> */}
                     <Divider />
-                    {<TextField
+                    <TextField className ={classes.TextField}
+                        style={{height:"300px"}}
                         id="standard-multiline-flexible"
-                        label="Required"
+                        label="Description"
+                        fullWidth
+                        margin="normal"
                         multiline
-                        rowsMax={4}
+                        // rowsMax={4}
                         defaultValue = "Enter ticket description here"
-                        //value={value}
-                        //onChange={handleChange}
-                    />/* <ListItem button>
-                        <ListItemText primary="Description " secondary="TYPE YOUR TEXT HERE" />
-                    </ListItem> } */}
+                        value={formData.issueDesc}
+                        name = "issueDesc"
+                        onChange={handleInputChange}
+                        />
+                
                     <Divider />
-                    {
+                    
                     <FormControl className={classes.formControl}>
                     <InputLabel id="demo-simple-select-label">Priority</InputLabel>
-                    <Select
+                    <Select className = {classes.dropdown}
+                    style={{width:"500px"}}
                     labelId="demo-simple-select-label"
                     id="demo-simple-select"
-                    value={priority}
-                    onChange={setPriority}
-                    >
-                    <MenuItem value={"Low"}>Low</MenuItem>
-                    <MenuItem value={"Medium"}>Medium</MenuItem>
-                    <MenuItem value={"High"}>High</MenuItem>
+                    value={formData.priority}
+                    name = "priority"
+                    onChange={handleInputChange}
+                     >
+                     <MenuItem value={"Low"}>Low</MenuItem>
+                     <MenuItem value={"Medium"}>Medium</MenuItem>
+                     <MenuItem value={"High"}>High</MenuItem>
                     <MenuItem value={"Critical"}>Critical</MenuItem>
                     </Select>
-                    </FormControl>}
+                    </FormControl>
 
-                    <Divider />
+                     <Divider/>
 
                     <FormControl className={classes.formControl}>
                     <InputLabel id="demo-simple-select-label">Assign User</InputLabel>
-                    <Select
+                    <Select className = {classes.dropdown}
+                    style = {{width:"500px"}}
                     labelId="demo-simple-select-label"
                     id="demo-simple-select"
-                    value={userAssigned}
-                    onChange={AssignUser}
-                    >
+                    value={formData.userAssigned}
+                    name = "userAssigned"
+                    onChange={handleInputChange}
+                >
                     <MenuItem value={"Page"}>Page</MenuItem>
-                    <MenuItem value={"Tamara"}>Tomato</MenuItem>
+                    <MenuItem value={"Tamara"}>Tamara</MenuItem>
                     <MenuItem value={"Ryan"}>Ryan</MenuItem>
                     <MenuItem value={"Chance"}>Chance</MenuItem>
                     </Select>
-                    </FormControl>}
+                    </FormControl>
                 </List>
             </Dialog>
         </div>

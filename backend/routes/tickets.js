@@ -9,21 +9,20 @@ router.route("/").get((req, res) => {
 
 router.route("/add").post((req, res) => {
     const userId = Number(req.body.userId);
-    const dateCreated = Date.parse(req.body.dateCreated);
+   
     const priority = req.body.priority;
     const issueDesc = req.body.issueDesc;
     const status = req.body.status;
     const userAssigned = req.body.userAssigned;
-
     const newTicket = new Ticket({
         userId,
-        dateCreated,
+        
         priority,
         issueDesc,
         status,
         userAssigned
     });
-
+console.log(newTicket)
     newTicket.save()
         .then(() => res.json('Ticket added!'))
         .catch(err => res.status(400).json('Error: ' + err));
