@@ -9,6 +9,8 @@ import TableRow from '@material-ui/core/TableRow';
 import Paper from '@material-ui/core/Paper';
 import Button from '@material-ui/core/Button';
 import "./style.css";
+import API from "../../utils/API";
+
 
 const useStyles = makeStyles((theme) => ({
     root: {
@@ -58,10 +60,24 @@ export default function Container() {
         .then(res => res.json())
         .then(res => setTickets({
             tix: res
-        })) 
-   
-        })
+        }))
 
+        })
+        function loadTickets() {
+          API.getTickets()
+            .then(res => 
+              setTickets(res.data)
+            )
+            .catch(err => console.log(err));
+        };
+      
+      
+        function deleteTickets(id) {
+          console.log('api',API)
+          API.deleteTickets(id)
+            // .then(res => loadTickets())
+            // .catch(err => console.log(err));
+        }
     
 
 
@@ -84,8 +100,8 @@ export default function Container() {
               <StyledTableCell align="left">{ticket.issueDesc}</StyledTableCell>
               <StyledTableCell align="center">{ticket.status}</StyledTableCell>
               <StyledTableCell align="right">{ticket.priority}</StyledTableCell>
-              <StyledTableCell align="right"> <Button variant="contained" color="primary">
-        Assign Ticket
+              <StyledTableCell align="right"> <Button onClick={() => deleteTickets(ticket._id)} variant="contained" color="primary">
+        Solved
       </Button></StyledTableCell>
 
             </StyledTableRow>
