@@ -54,29 +54,6 @@ export default function Container() {
 
    const [tickets, setTickets] = useState({tix:[]})
 
-//    const getUser = () => {
-//     axios.get('http://localhost:5000/signup').then(response => {
-//       console.log('Get user response: ')
-//       console.log(response.data)
-//       if (response.data.user) {
-//         console.log('Get User: There is a user saved in the server session: ')
-
-//         // this.setState({
-//         //   loggedIn: true,
-//         //   username: response.data.user.username
-//         // })
-//       } else {
-//         console.log('Get user: no user');
-//         // this.setState({
-//         //   loggedIn: false,
-//         //   username: null
-//         // })
-//       }
-//     })
-//   }
-
-//   getUser();
-
    useEffect(() =>
     {
         fetch("http://localhost:5000/tickets")
