@@ -27,10 +27,10 @@ app.use(
     })
 );
 
-app.use((req, res, next) => {
-    console.log('req.session', req.session);
-    return next();
-});
+// app.use((req, res, next) => {
+//     // console.log('req.session', req.session);
+//     return next();
+// });
 
 app.post('/user', (req, res) => {
     console.log('user signup');

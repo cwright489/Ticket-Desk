@@ -3,7 +3,7 @@ const router = express.Router()
 const SignUp = require('../models/signUp.model');
 const passport = require('../passport');
 
-router.post('/signup', (req, res) => {
+router.post('/', (req, res) => {
     console.log('user signup');
 
     const { username, password } = req.body
@@ -29,28 +29,31 @@ router.post('/signup', (req, res) => {
     })
 })
 
-router.get(
-    'user/login',
-    function (req, res, next) {
-        console.log('routes/user.js, login, req.body: ');
-        console.log(req.body)
-        next()
-    },
-    passport.authenticate('local'),
-    (req, res) => {
-        console.log('logged in', req.username);
+router.post(
+     '/user/login',
+     passport.authenticate('local', { successRedirect: 'http://localhost:3000/',
+                                   failureRedirect: '/login' }));/// bad look - send message to user that login is no good. Make sure it displays on front!!!
+//     function (req, res, next) {
+//         console.log('routes/user.js, login, req.body: ');
+//         console.log(req.body)
+//         next()
+//     },
+//     passport.authenticate('local'),
+//     (req, res) => {
+//         console.log('logged in', req.username);
     
-        var userInfo = {
-            username: req.user.username 
-        };
-        console.log(userInfo);
-        res.send(userInfo);
-    }
-)
+//         var userInfo = {
+//             username: req.user.username 
+//         };
+//         console.log(userInfo);
+//         res.send(userInfo);
+//     }
+// )
 
-router.get('/', (req, res, next) => {
+
+router.get('/:username', (req, res, next) => {
     console.log('===== user!!======')
-    console.log(req.username)
+    console.log(req.params.username)
     if (req.user) {
         res.json({ username: req.username })
     } else {
