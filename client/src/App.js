@@ -18,43 +18,27 @@ class App extends Component {
   constructor() {
     super()
     this.state = {
-      loggedIn: false,
-      username: null
+        loggedIn: false,
+        username: false
     }
 
-    this.getUser = this.getUser.bind(this)
-    this.componentDidMount = this.componentDidMount.bind(this)
+    // this.getUser = this.getUser.bind(this)
+    // this.componentDidMount = this.componentDidMount.bind(this)
     this.updateUser = this.updateUser.bind(this)
   }
 
-  componentDidMount() {
-    this.getUser()
-  }
+  // componentDidMount() {
+  //   this.getUser()
+  // }
 
   updateUser(userObject) {
-    this.setState(userObject)
-  }
-
-  getUser() {
-    axios.get('http://localhost:5000/signup').then(response => {
-      console.log('Get user response: ')
-      console.log(response.data)
-      if (response.data.user) {
-        console.log('Get User: There is a user saved in the server session: ')
-
-        this.setState({
-          loggedIn: true,
-          username: response.data.user.username
-        })
-      } else {
-        console.log('Get user: no user');
-        this.setState({
-          loggedIn: false,
-          username: null
-        })
-      }
+    this.setState({username: userObject.username}, () => {
+      console.log('usrObj', this.state.username);
     })
+    this.setState({loggedIn: userObject.loggedIn})
   }
+
+  
 
   render() {
     return (
@@ -62,8 +46,8 @@ class App extends Component {
         <div className="App">
           <NavBar updateUser={this.updateUser} loggedIn={this.state.loggedIn} />
           {/* greet user if logged in: */}
-          {this.state.loggedIn &&
-            <p>Join the party, {this.state.username}!</p>
+          {this.state.loggedIn && this.state.username ?
+             <p>Join the party, {this.state.username}!</p> : <div></div>
           }
           <Route exact path={"/"}>
             <Container />
