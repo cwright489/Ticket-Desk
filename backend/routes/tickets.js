@@ -40,21 +40,26 @@ router.route("/:id").delete((req, res) => {
         .catch(err => res.status(400).json('Error: ' + err));
 });
 
-router.route("/update/:id").post((req, res) => {
-    Ticket.findById(req.params.id)
-        .then(ticket => {
-            ticket.userId = Number(req.body.userId);
-            ticket.dateCreated = Date.parse(req.body.dateCreated);
-            ticket.priority = req.body.priority;
-            ticket.issueDesc = req.body.issueDesc;
-            ticket.status = req.body.status;
-            ticket.userAssigned = req.body.userAssigned;
+router.route("/update/:id").put((req, res) => {
+    console.log('req', req.body);
+    Ticket.findOneAndUpdate({_id:req.params.id},req.body, function(response){
+        console.log('res', response)
+    })
+    // .then (dbmode => {
+    //     res.json(dbmode)
+    // })
+    // .catch( err => res.json(err))
+    // Ticket.findById(req.params.id)
+    //     // .then(ticket => {
+    //     //     ticket.priority = req.body.priority;
+    //     //     ticket.issueDesc = req.body.issueDesc;
+    //     //     ticket.userAssigned = req.body.userAssigned;
 
-            ticket.save()
-                .then(() => res.json('Ticket updated!'))
-                .catch(err => res.status(400).json('Error: ' + err));
-        })
-        .catch(err => res.status(400).json('Error: ' + err));
+    //     //     ticket.save()
+    //     //         .then(() => res.json('Ticket updated!'))
+    //     //         .catch(err => res.status(400).json('Error: ' + err));
+    //     // })
+    //     // .catch(err => res.status(400).json('Error: ' + err));
 });
 
 module.exports = router;
