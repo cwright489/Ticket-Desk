@@ -41,6 +41,7 @@ connection.once('open', () => {
 
 const ticketsRouter = require("./routes/tickets");
 const usersRouter = require("./routes/users");
+const signUpRouter = require("./routes/signUp");
 
 app.use('/tickets', ticketsRouter);
 app.use('/users', usersRouter);
