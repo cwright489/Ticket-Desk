@@ -10,6 +10,8 @@ import Paper from '@material-ui/core/Paper';
 import Button from '@material-ui/core/Button';
 import "./style.css";
 import API from "../../utils/API";
+import TicketCard from "../TicketCard/TicketCard";
+import Modal from '@material-ui/core/Modal';
 
 
 const useStyles = makeStyles((theme) => ({
@@ -28,6 +30,8 @@ const useStyles = makeStyles((theme) => ({
         minWidth: 400,
         // maxWidth: "725px",
       },
+
+   
 }));
 
 const StyledTableCell = withStyles((theme) => ({
@@ -53,7 +57,8 @@ export default function Container() {
     const classes = useStyles();
 
    const [tickets, setTickets] = useState({tix:[]})
-
+   const [ticketOpen, setTicketOpen] = useState(false)
+   const [ticketChosen, setTicketChosen] = useState(null);
    useEffect(() =>
     {
         fetch("http://localhost:5000/tickets")
@@ -63,21 +68,28 @@ export default function Container() {
         }))
 
         })
-        function loadTickets() {
-          API.getTickets()
-            .then(res => 
-              setTickets(res.data)
-            )
-            .catch(err => console.log(err));
-        };
+        // function loadTickets() {
+        //   API.getTickets()
+        //     .then(res => 
+        //       setTickets(res.data)
+        //     )
+        //     .catch(err => console.log(err));
+        // };
       
-      
+        function closeModal(){
+          setTicketOpen(false)
+        }
         function deleteTickets(id) {
           console.log('api',API)
           API.deleteTickets(id)
             // .then(res => loadTickets())
             // .catch(err => console.log(err));
+        };
+        function setTicketInfo(ticket){
+          setTicketChosen(ticket);
+          setTicketOpen(true);
         }
+   
     
 
 
@@ -90,7 +102,8 @@ export default function Container() {
             <StyledTableCell align="left">Description</StyledTableCell>
             <StyledTableCell align="center">Status</StyledTableCell>
             <StyledTableCell align="right">Priority</StyledTableCell>
-            <StyledTableCell align="right">Take Ownership</StyledTableCell>
+            <StyledTableCell align="right">Solved</StyledTableCell>
+            <StyledTableCell align="right">View Ticket</StyledTableCell>
           </TableRow>
         </TableHead>
         <TableBody>
@@ -103,8 +116,16 @@ export default function Container() {
               <StyledTableCell align="right"> <Button onClick={() => deleteTickets(ticket._id)} variant="contained" color="primary">
         Solved
       </Button></StyledTableCell>
+      <StyledTableCell align="right"><Button onClick={() => setTicketInfo(ticket)} variant="contained" color="primary">
+  Open ticket 
+</Button></StyledTableCell>
+<TicketCard 
+isOpen={ticketOpen}
+closeModal={closeModal}
+ticketChosen ={ticketChosen}/>
 
             </StyledTableRow>
+          
           ))}
         </TableBody>
       </Table>
