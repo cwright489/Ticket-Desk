@@ -1,6 +1,5 @@
 import React, { Component } from 'react';
 import './App.css';
-import NavBar from "./components/NavBar/NavBar";
 import Footer from './components/Footer/Footer';
 import Container from "./components/Container/Container";
 import TicketCard from "./components/TicketCard/TicketCard";
@@ -8,6 +7,9 @@ import TicketCard from "./components/TicketCard/TicketCard";
 import { BrowserRouter as Router, Route } from "react-router-dom";
 import SignUp from "./components/SignUp/SignUp";
 import LoginForm from "./components/LoginForm/LoginForm";
+import Home from "./components/Home/Home"
+import NavBar from "./components/NavBar/NavBar"
+import Chart from "./components/Chart/Chart"
 
 class App extends Component {
   constructor() {
@@ -36,13 +38,14 @@ class App extends Component {
     return (
       <Router>
         <div className="App">
-          <NavBar updateUser={this.updateUser} loggedIn={this.state.loggedIn} />
-          {/* greet user if logged in: */}
-          {this.state.loggedIn && this.state.username ?
+        
+    {this.state.loggedIn && <NavBar updateUser={this.updateUser} loggedIn={this.state.loggedIn} />} 
+           
+           {this.state.loggedIn && this.state.username ?
              <p>Join the party, {this.state.username}!</p> : <div></div>
-          }
-          <Route exact path={"/"}>
-            <Container />
+          }  
+          <Route exact path={"/home"}>
+             <Container /> 
           </Route>
           <Route exact path={"/signup"}>
             <SignUp />
@@ -53,7 +56,15 @@ class App extends Component {
           <Route exact path={"/ticketCard"}>
             <TicketCard />
           </Route>
+           <Route exact path={"/"}>
+          <Home/>
+          </Route> 
+          <Route exact path={"/chart"}>
+          <Chart/>
+          </Route> 
+                
           <Footer />
+   
         </div>
       </Router>
 
