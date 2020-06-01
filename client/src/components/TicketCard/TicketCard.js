@@ -69,11 +69,11 @@ export default function TicketCard(props) {
     if(!ticketChosen ) return null
 
     const { userAssigned, priority, issueDesc , _id } = ticketChosen
-    const data = {
-        name:  userAssigned,
-        priority:  priority,
-        description:  issueDesc
-    }
+    // const data = {
+    //     name:  userAssigned,
+    //     priority:  priority,
+    //     description:  issueDesc
+    // }
 
     function update (){
         console.log("currTicket",currTicket)
@@ -96,11 +96,11 @@ export default function TicketCard(props) {
                     <CardContent key={'ticket'}>
                     <form className={classes.root} noValidate autoComplete="off">
 
-                    <TextField  onChange = {handleInputChange} name = "userAssigned" required id="standard-required" label="Required" defaultValue =  {props.ticketChosen.userAssigned} />
+                    <TextField  onChange = {handleInputChange} name = "userAssigned" required id="standard-required" label="UserName" defaultValue =  {props.ticketChosen.userAssigned} />
 
-                    <TextField onChange = {handleInputChange} name = "priority" required id="standard-required" label="Required" defaultValue =  {props.ticketChosen.priority} />
+                    <TextField onChange = {handleInputChange} name = "priority" required id="standard-required" label="Priority" defaultValue =  {props.ticketChosen.priority} />
 
-                    <TextField onChange = {handleInputChange} name = "issueDesc" required id="standard-required" label="Required" defaultValue =  {props.ticketChosen.issueDesc} />
+                    <TextField onChange = {handleInputChange} name = "issueDesc" required id="standard-required" label="Description" defaultValue =  {props.ticketChosen.issueDesc} />
 
                    
                       

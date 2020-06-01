@@ -1,6 +1,14 @@
 import React, { Component } from 'react'
 import { Redirect } from 'react-router-dom'
+import TextField from '@material-ui/core/TextField';
+import Button from '@material-ui/core/Button';
 import axios from 'axios'
+import "./style.css";
+
+
+
+  
+
 
 class LoginForm extends Component {
     constructor() {
@@ -41,7 +49,7 @@ class LoginForm extends Component {
                     })
                     // update the state to redirect to home
                     this.setState({
-                        redirectTo: '/'
+                        redirectTo: '/home'
                     })
                 }
             }).catch(error => {
@@ -51,52 +59,60 @@ class LoginForm extends Component {
             })
     }
 
-    render() {
+    render () {
         if (this.state.redirectTo) {
             return <Redirect to={{ pathname: this.state.redirectTo }} />
         } else {
             return (
-                <div>
-                    <h4>Login</h4>
+                <div id = "login">
+                    
+                 <h4>LOGIN</h4>
                     <form className="form-horizontal">
                         <div className="form-group">
-                            <div className="col-1 col-ml-auto">
-                                <label className="form-label" htmlFor="username">Username</label>
-                            </div>
-                            <div className="col-3 col-mr-auto">
-                                <input className="form-input"
-                                    type="text"
-                                    id="username"
-                                    name="username"
-                                    placeholder="Username"
-                                    value={this.state.username}
-                                    onChange={this.handleChange}
-                                />
-                            </div>
-                        </div>
-                        <div className="form-group">
-                            <div className="col-1 col-ml-auto">
-                                <label className="form-label" htmlFor="password">Password: </label>
-                            </div>
-                            <div className="col-3 col-mr-auto">
-                                <input className="form-input"
-                                    placeholder="password"
-                                    type="password"
-                                    name="password"
-                                    value={this.state.password}
-                                    onChange={this.handleChange}
-                                />
-                            </div>
-                        </div>
+                        <div className="col-3 col-mr-auto">
+                        <TextField
+                         style = {{width:"300px", margin:"15px"}}
+          required
+          type="text"
+          id="username"
+          name="username"
+          placeholder="Username"
+          label="Username"
+          defaultValue="Username"
+          variant="outlined"
+          color="primary"
+          value={this.state.username}
+          onChange={this.handleChange}
+        />
+        </div>
+        <div className="col-3 col-mr-auto">
+             <TextField
+             style = {{width:"300px" ,margin:"15px"}}
+          id="outlined-password-input"
+          placeholder="password"
+          type="password"
+          name="password"
+          label="Password"
+          autoComplete="current-password"
+          color="primary"
+          variant="outlined"
+          value={this.state.password}
+          onChange={this.handleChange}
+          
+        />
+</div>
+                        </div> 
                         <div className="form-group ">
                             <div className="col-7"></div>
-                            <button
-                                className="btn btn-primary col-1 col-mr-auto"
-                               
-                                onClick={this.handleSubmit}
-                                type="submit">Login</button>
+                            <Button id ="button" style = {{width:"130px"}}  onClick={this.handleSubmit}  size="large" variant="contained" color="primary">
+Login
+</Button>
+                            
+                            
                         </div>
                     </form>
+            
+      
                 </div>
             )
         }

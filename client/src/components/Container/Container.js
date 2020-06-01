@@ -11,7 +11,8 @@ import Button from '@material-ui/core/Button';
 import "./style.css";
 import API from "../../utils/API";
 import TicketCard from "../TicketCard/TicketCard";
-import Modal from '@material-ui/core/Modal';
+
+
 
 
 const useStyles = makeStyles((theme) => ({
@@ -59,6 +60,8 @@ export default function Container() {
    const [tickets, setTickets] = useState({tix:[]})
    const [ticketOpen, setTicketOpen] = useState(false)
    const [ticketChosen, setTicketChosen] = useState(null);
+  
+
    useEffect(() =>
     {
         fetch("http://localhost:5000/tickets")
@@ -68,13 +71,7 @@ export default function Container() {
         }))
 
         })
-        // function loadTickets() {
-        //   API.getTickets()
-        //     .then(res => 
-        //       setTickets(res.data)
-        //     )
-        //     .catch(err => console.log(err));
-        // };
+
       
         function closeModal(){
           setTicketOpen(false)
@@ -82,8 +79,7 @@ export default function Container() {
         function deleteTickets(id) {
           console.log('api',API)
           API.deleteTickets(id)
-            // .then(res => loadTickets())
-            // .catch(err => console.log(err));
+            
         };
         function setTicketInfo(ticket){
           setTicketChosen(ticket);
